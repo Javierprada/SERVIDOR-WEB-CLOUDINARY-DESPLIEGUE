@@ -8,6 +8,8 @@ const { cloudinary, streamifier } = require ('../config-cloudinary/cloudinary');
 
 const uploadToCloudinary = (buffer, opcions) => {
     return new Promise((resolve, reject) => {
+        console.log('🔍 cloud_name en controller:', process.env.CLOUDINARY_CLOUD_NAME);
+
         const stream = cloudinary.uploader.upload_stream(opcions, (error, result)=> {
             if (error) reject(error);
             else resolve(result);

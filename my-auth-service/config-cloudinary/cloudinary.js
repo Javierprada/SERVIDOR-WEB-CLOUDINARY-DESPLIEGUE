@@ -1,7 +1,7 @@
 const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier');
 
-// 🔁 Primero: reconstruye desde CLOUDINARY_URL si existe
+// 🔁 Reconstrucción desde CLOUDINARY_URL
 if (process.env.CLOUDINARY_URL) {
   const parsed = new URL(process.env.CLOUDINARY_URL);
   process.env.CLOUDINARY_CLOUD_NAME = parsed.hostname;
@@ -9,18 +9,7 @@ if (process.env.CLOUDINARY_URL) {
   process.env.CLOUDINARY_API_SECRET = parsed.password;
 }
 
-// 🔍 Luego: diagnóstico
-const missingVars = [
-  !process.env.CLOUDINARY_CLOUD_NAME && 'CLOUDINARY_CLOUD_NAME',
-  !process.env.CLOUDINARY_API_KEY && 'CLOUDINARY_API_KEY',
-  !process.env.CLOUDINARY_API_SECRET && 'CLOUDINARY_API_SECRET'
-].filter(Boolean);
-
-if (missingVars.length > 0) {
-  console.warn(`⚠️ Variables faltantes: ${missingVars.join(', ')}`);
-}
-
-// ✅ Configuración
+// ✅ Configuración obligatoria
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
