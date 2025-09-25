@@ -2,6 +2,16 @@ const {pool} = require ('../config/db'); //
 
 
 const adminContent = {
+
+
+
+  findMovieByTitle: async (title) => {
+       const query = `SELECT * FROM movies WHERE title = ? LIMIT 1`;
+       const [rows] = await pool.execute(query, [title]);
+       return rows[0]; // Devuelve la primera coincidencia o undefined
+    },
+
+
     /** s
     *Inserta una nueva pelicula en la BD
     *@param {object} movieData // Objeto con los datos de la aplicación...
@@ -45,6 +55,10 @@ const adminContent = {
 
 
 
+   
+
+
+
 
     /**
    * Obtiene todas las películas.
@@ -68,7 +82,7 @@ const adminContent = {
 
 
 
-
+  
 
 
 

@@ -11,6 +11,7 @@ const userRoutes = require('./routes/userRoutes');
 
 // Inicializa la aplicación Express
 const app = express();
+app.options('/api/*', cors());
 
 const allowedOrigins = ['http://localhost:5173', 'https://tu-frontend-en-produccion.com']; // Agrega otros orígenes si es necesario
 app.use(cors({
