@@ -1,0 +1,8 @@
+# Archivo de entorno.
+.env
+
+# Directorio de dependencias de Node.js
+node_modules/
+
+# Crear ADMIN
+crearAdmin/
