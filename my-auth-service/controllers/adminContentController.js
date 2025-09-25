@@ -1,10 +1,16 @@
 const adminContent = require('../models/adminContent'); // Importa el modelo.
-
 const path = require ('path'); // Necesario para path.extname 
 const cloudinary = require('cloudinary') .v2;
+require('dotenv').config(); // Cargar variables de entorno
 const streamifier = require('streamifier');
 
 
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 
 const uploadToCloudinary = (buffer, opcions) => {
@@ -71,6 +77,7 @@ const addMovie = async (req, res) => {
        try {
          videoResult = await uploadToCloudinary(videoBuffer, {
             resource_type: 'video',
+            folder: 'movies/videos',
         });
        } catch (err) {
             console.error('❌ Error al subir el video a Cloudinary:', err);
@@ -175,8 +182,23 @@ const updateMovie = async (req, res) => {
     try {
         const { title, description, genre, director, actors, release_date, duration_minutes } = req.body;
 
-        const video_url = req.files?.video?.[0]?.filename ? `/uploads/${req.files.video[0].filename}` : null;
-        //const poster_url = req.files?.poster?.[0]?.filename ? `/uploads/${req.files.poster[0].filename}` : null;
+        const videoBuffer = req.files?.video?.[0]?.buffer; // buffer del nuevo video, si se subió uno.
+        let video_url = null;
+
+        if (videoBuffer) {
+            try {
+                const videoResult = await uploadToCloudinary(videoBuffer, { resource_type: 'video', folder: 'movies/videos' });
+                video_url = videoResult.secure_url;
+            } catch (err) {
+                console.error('❌ Error al subir nuevo video en updateMovie:', err);
+                return res.status(500).json ({success: false, message: 'Error al subir nuevo video.'})
+            }
+        }
+
+        if (duration_minutes && isNaN(parseInt(duration_minutes))) {
+            return res.status(400).json({success: false, message: 'La duración debe ser un número válido.'});
+        }
+        
 
         const updatedData = {
             title: title ?? null,
