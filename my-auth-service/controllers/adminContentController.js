@@ -1,6 +1,6 @@
 const adminContent = require('../models/adminContent'); // Importa el modelo.
 const path = require ('path'); // Necesario para path.extname 
-const { cloudinary, streamifier } = requiere ('../config-cloudinary/cloudinary');
+const { cloudinary, streamifier } = require ('../config-cloudinary/cloudinary');
 
 
 
