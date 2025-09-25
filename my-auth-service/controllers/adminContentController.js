@@ -1,16 +1,33 @@
 const adminContent = require('../models/adminContent'); // Importa el modelo.
 const path = require ('path'); // Necesario para path.extname 
 const cloudinary = require('cloudinary') .v2;
-require('dotenv').config(); // Cargar variables de entorno
+
 const streamifier = require('streamifier');
 
-
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 cloudinary.config({
+    
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
+    
 });
+
+
+
+
+console.log('Cloudinary config:',{
+    
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    
+});
+
+
 
 
 const uploadToCloudinary = (buffer, opcions) => {
