@@ -7,8 +7,11 @@
     !process.env.CLOUDINARY_API_SECRET && 'CLOUDINARY_API_SECRET'
     ].filter(Boolean);
 
-    if (missingVars.length > 0) {
-    console.warn(`⚠️ Variables faltantes: ${missingVars.join(', ')}`);
+    if (process.env.CLOUDINARY_URL) {
+    const parsed = new URL(process.env.CLOUDINARY_URL);
+    process.env.CLOUDINARY_CLOUD_NAME = parsed.hostname;
+    process.env.CLOUDINARY_API_KEY = parsed.username;
+    process.env.CLOUDINARY_API_SECRET = parsed.password;
     }
 
     cloudinary.config({
