@@ -1,6 +1,7 @@
 const adminContent = require('../models/adminContent'); // Importa el modelo.
 const path = require ('path'); // Necesario para path.extname 
 const { cloudinary, streamifier } = require ('../config-cloudinary/cloudinary');
+const { TIMEOUT } = require('dns');
 
 
 
@@ -8,12 +9,18 @@ const { cloudinary, streamifier } = require ('../config-cloudinary/cloudinary');
 
 const uploadToCloudinary = (buffer, opcions) => {
     return new Promise((resolve, reject) => {
-        console.log('🔍 cloud_name en controller:', process.env.CLOUDINARY_CLOUD_NAME);
+        console.log('📤 Iniciando upload... esto puede tomar varios minutos');
 
-        const stream = cloudinary.uploader.upload_stream(opcions, (error, result)=> {
+        // Configuración mas callback para manejar el upload.
+        const stream = cloudinary.uploader.upload_stream({...opcions, timeout: 600000}, (error, result) => { // Objeto de configuración
             if (error) reject(error);
-            else resolve(result);
+            else {
+                console.log('✅ Upload exitoso:');
+                resolve(result);
+            }
         });
+
+        //Leer el buffer y enviarlo al stream
         streamifier.createReadStream(buffer).pipe(stream);
     
     });
