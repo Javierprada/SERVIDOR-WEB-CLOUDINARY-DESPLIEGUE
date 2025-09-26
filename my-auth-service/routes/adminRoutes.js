@@ -27,14 +27,14 @@ router.put(
 // 📄 Obtener todas las películas
 router.get(
   '/movies',
-  verificarToken,
+  //verificarToken,
   adminContentController.getAllMovies
 );
 
 // 🗑️ Eliminar película
 router.delete(
   '/delete/:id',
-  verificarToken,
+  //verificarToken,
   verificarRolAdmin,
   adminContentController.deleteMovie
 );
