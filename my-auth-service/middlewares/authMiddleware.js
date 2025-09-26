@@ -2,8 +2,14 @@ const jwt = require('jsonwebtoken');
 const secret = process.env.JWT_SECRET || 'ultra_secreta';
 
 function verificarToken(req, res, next) {
+
+    console.log('🔍 Middleware verificarToken ejecutándose...');
+    console.log('🔍 Headers:', req.headers.authorization);
+
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1]; // Espera 'Bearer TOKEN'
+
+    console.log('🔍 Token extraído:', token ? 'TOKEN PRESENTE' : 'TOKEN AUSENTE');
 
     if (!token) {
         return res.status(401).json({ message: 'Token no proporcionado. ❌' });

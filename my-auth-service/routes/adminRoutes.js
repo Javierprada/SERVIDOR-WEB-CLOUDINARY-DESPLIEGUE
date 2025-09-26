@@ -9,7 +9,7 @@ const upload = require('../middleware/uploads');
 // 📦 Crear película (sube video y poster)
 router.post(
   '/movies',
-  verificarToken,
+ // verificarToken,
   verificarRolAdmin,
   upload.fields([{ name: 'video' }, { name: 'poster' }]),
   adminContentController.addMovie
