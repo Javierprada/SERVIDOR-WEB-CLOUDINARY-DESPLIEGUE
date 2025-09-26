@@ -1,12 +1,17 @@
 const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier');
 
-// ✅ Configura directamente desde CLOUDINARY_URL
 cloudinary.config({
-  secure: true
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
 });
 
-console.log('🔍 CLOUDINARY_URL:', process.env.CLOUDINARY_URL || '❌ NO DEFINIDO');
+console.log('✅ Cloudinary configurado con:', {
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || '❌ NO DEFINIDO',
+  api_key: process.env.CLOUDINARY_API_KEY ? '✔️ DEFINIDO' : '❌ NO DEFINIDO',
+  api_secret: process.env.CLOUDINARY_API_SECRET ? '✔️ DEFINIDO' : '❌ NO DEFINIDO',
+});
 
 module.exports = { cloudinary, streamifier };
-
