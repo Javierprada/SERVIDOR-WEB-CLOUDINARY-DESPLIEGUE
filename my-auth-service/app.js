@@ -13,9 +13,10 @@ const userRoutes = require('./routes/userRoutes');
 const app = express();
 app.options('/api/*', cors());
 
-const allowedOrigins = ['http://localhost:5173', 'https://frontend-listo-para-deploy-en-vercel-joseth-pradas-projects.vercel.app']; // Agrega otros orígenes si es necesario
+const allowedOrigins = ['http://localhost:5173', 'https://frontend-listo-para-deploy-en-vercel-joseth-pradas-projects.vercel.app', 'https://frontend-listo-para-deploy-en-vercel-joseth-pradas-projects.vercel.app/']; // Agrega otros orígenes si es necesario
 app.use(cors({
     origin: function (origin, callback) {
+      console.log('Origen recibido:', origin);
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
