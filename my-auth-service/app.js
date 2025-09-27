@@ -13,7 +13,7 @@ const userRoutes = require('./routes/userRoutes');
 const app = express();
 app.options('/api/*', cors());
 
-/*const allowedOrigins = ['http://localhost:5173', 'https://frontend-listo-para-deploy-en-vercel-joseth-pradas-projects.vercel.app']; // Agrega otros orígenes si es necesario
+const allowedOrigins = ['http://localhost:5173', 'https://frontend-listo-para-deploy-en-vercel-joseth-pradas-projects.vercel.app']; // Agrega otros orígenes si es necesario
 app.use(cors({
     origin: function (origin, callback) {
       if (!origin || allowedOrigins.includes(origin)) {
@@ -26,17 +26,17 @@ app.use(cors({
     credentials: true
 
 }));
-*/
 
 
 
+/*
 app.use(cors({
     origin: true, // Permite todos los orígenes temporalmente
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
 
-
+*/
 
 app.use(express.json());
 
